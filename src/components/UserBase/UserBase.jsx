@@ -10,8 +10,12 @@ const UserBase = () => {
 		<FixWidth>
 			{/* Section Title */}
 			<div className=" text-center">
-				<h1 className="text-3xl font-bold">Our User Base</h1>
-				<p className="font-medium">Across The World</p>
+				<h1 data-aso="fade-up" className="text-3xl font-bold">
+					Our User Base
+				</h1>
+				<p data-aso="fade-up" className="font-medium">
+					Across The World
+				</p>
 				<div className=" flex justify-center mt-2">
 					<div className=" w-12 bg-indigo-400 h-[2px]"></div>
 					<div className=" w-12 bg-gray-100 h-[2px]"></div>

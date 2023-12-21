@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import logo from '../../assets/TaskyLogo.svg';
 import Footer from '../../components/Shared/Footer/Footer';
+import { Helmet } from 'react-helmet-async';
 
 const Dashboard = () => {
 	// State
@@ -10,6 +11,9 @@ const Dashboard = () => {
 	return (
 		<>
 			<div className="flex gap-10">
+				<Helmet>
+					<title>Tasky | Dashboard</title>
+				</Helmet>
 				<div className="bg-slate-900 min-h-screen">
 					<div
 						className={`${

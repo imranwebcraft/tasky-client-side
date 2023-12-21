@@ -2,15 +2,19 @@ import { Link } from 'react-router-dom';
 import FixWidth from '../../UI/FixWidth';
 import { FcGoogle } from 'react-icons/fc';
 import PageAnimation from '../../UI/PageAnimation';
+import { Helmet } from 'react-helmet-async';
 
 const Signup = () => {
 	return (
 		<PageAnimation>
+			<Helmet>
+				<title>Tasky | Sign Up</title>
+			</Helmet>
 			<div className="py-32">
 				<FixWidth>
 					<form className="w-[80%] max-w-[400px] mx-auto">
 						{/* Form Heading */}
-						<h1 className=" text-4xl capitalize text-center mb-10">
+						<h1 className=" text-4xl capitalize text-center font-medium mb-10">
 							Join Us Today
 						</h1>
 						<div className=" relative my-5">
