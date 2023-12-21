@@ -20,7 +20,7 @@ const Banner = () => {
 						<p data-aos="fade-left" className="text-lg text-gray-700">
 							Create, Track and Organize your work.
 						</p>
-						<Link data-aos="fade-right" to="/login">
+						<Link data-aos="fade-right" to="/dashboard/taskmanager">
 							<button className="btn-white mt-5"> Let&apos;s Explore </button>
 						</Link>
 					</div>

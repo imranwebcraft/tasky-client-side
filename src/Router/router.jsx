@@ -9,6 +9,7 @@ import Signup from '../pages/Signup/Signup';
 import Login from '../pages/Login/Login';
 import Dashboard from '../Layout/Dashboard/Dashboard';
 import Taskmanager from '../pages/Dashboard/Taskmanager/Taskmanager';
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
 	{
@@ -48,7 +49,11 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: 'taskmanager',
-				element: <Taskmanager />,
+				element: (
+					<PrivateRoute>
+						<Taskmanager />
+					</PrivateRoute>
+				),
 			},
 		],
 	},
