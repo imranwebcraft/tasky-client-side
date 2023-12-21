@@ -7,7 +7,7 @@
 
 @layer components {
 	* {
-		@apply m-0 p-0 box-border;
+		@apply m-0 p-0 box-border scroll-smooth;
 	}
 	.active {
 		@apply text-indigo-500 font-medium;
