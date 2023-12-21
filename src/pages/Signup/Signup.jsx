@@ -64,7 +64,7 @@ const Signup = () => {
 						Already have an account?
 						<Link
 							to="/login"
-							className=" underline decoration-2 ml-1 hover:decoration-indigo-500 underline-offset-2 transition-all duration-300"
+							className=" underline decoration-2 ml-1 hover:decoration-indigo-500 underline-offset-4 decoration-transparent  transition-all duration-300"
 						>
 							Log In
 						</Link>

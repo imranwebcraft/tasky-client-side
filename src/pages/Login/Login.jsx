@@ -50,9 +50,9 @@ const Login = () => {
 						Do not have an account?
 						<Link
 							to="/signup"
-							className=" underline decoration-2 ml-1 hover:decoration-indigo-500 underline-offset-2 transition-all duration-300"
+							className=" underline decoration-transparent decoration-2 ml-1 hover:decoration-indigo-500 underline-offset-4 transition-all duration-300"
 						>
-							Sign In
+							Sign Up
 						</Link>
 					</p>
 				</form>
