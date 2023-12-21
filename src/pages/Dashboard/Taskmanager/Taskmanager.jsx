@@ -1,8 +1,26 @@
 import { MdOutlineTaskAlt } from 'react-icons/md';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { IoMdDoneAll } from 'react-icons/io';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../../Provider/AuthProvider';
 
 const Taskmanager = () => {
+	const { logOut } = useContext(AuthContext);
+	const navigate = useNavigate();
+
+	const handleLogOut = () => {
+		logOut()
+			.then(() => {
+				toast.success('Log out successfull');
+				navigate('/');
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	return (
 		<div className=" w-[100%]">
 			<div className="py-10 w-full pr-10">
@@ -49,7 +67,10 @@ const Taskmanager = () => {
 							/>
 						</div>
 						{/* LogOut Button */}
-						<button className=" group flex gap-1 items-center hover:bg-red-500 px-2 py-1 rounded-md border border-red-500 transition-all duration-300">
+						<button
+							onClick={handleLogOut}
+							className=" group flex gap-1 items-center hover:bg-red-500 px-2 py-1 rounded-md border border-red-500 transition-all duration-300"
+						>
 							<p className=" group-hover:text-white transition-all duration-300">
 								Log Out
 							</p>

@@ -1,8 +1,25 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/TaskyLogo.svg';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../../Provider/AuthProvider';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
+	// Context
+	const { user, logOut } = useContext(AuthContext);
+	const navigate = useNavigate();
+
+	const handleLogOut = () => {
+		logOut()
+			.then(() => {
+				toast.success('Log out successfull');
+				navigate('/login');
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
+	};
+
 	const [open, setOpen] = useState(false);
 	return (
 		<header className="border-b bg-slate-900 sticky top-0 z-50">
@@ -70,9 +87,20 @@ const Navbar = () => {
 						</NavLink>
 					</ul>
 					{/* Button */}
-					<Link to="/signup">
-						<button className="btn mt-5 md:mt-0">Sign Up</button>
-					</Link>
+					{user ? (
+						<button
+							onClick={handleLogOut}
+							className="btn-danger mt-5 md:mt-0 flex items-center gap-2"
+						>
+							Log Out<i className="fi fi-rr-power rotate-90"></i>
+						</button>
+					) : (
+						<Link to="/signup">
+							<button className="btn mt-5 md:mt-0">
+								Sign Up <i className="fi fi-rr-user text-sm"></i>
+							</button>
+						</Link>
+					)}
 				</div>
 			</nav>
 		</header>
