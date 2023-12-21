@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 const Navbar = () => {
 	const [open, setOpen] = useState(false);
-
 	return (
 		<header className="border-b bg-slate-900 sticky top-0 z-50">
 			<nav className="relative h-20 py-5 px-[20px] md:px-[30px] md:flex justify-between items-center max-w-7xl mx-auto">
@@ -73,9 +72,6 @@ const Navbar = () => {
 					{/* Button */}
 					<Link to="/signup">
 						<button className="btn mt-5 md:mt-0">Sign Up</button>
-					</Link>
-					<Link to="/dashboard/taskmanager">
-						<button className="btn mt-5 md:mt-0">Dashboard</button>
 					</Link>
 				</div>
 			</nav>

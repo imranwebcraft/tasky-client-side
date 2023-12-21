@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import logo from '../../assets/TaskyLogo.svg';
 import Footer from '../../components/Shared/Footer/Footer';
 import { Helmet } from 'react-helmet-async';
@@ -7,6 +7,11 @@ import { Helmet } from 'react-helmet-async';
 const Dashboard = () => {
 	// State
 	const [open, setOpen] = useState(true);
+
+	const location = useLocation();
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [location]);
 
 	return (
 		<>

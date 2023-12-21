@@ -8,6 +8,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
 import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 			<AuthProvider>
 				<RouterProvider router={router}></RouterProvider>
 			</AuthProvider>
+			<Toaster />
 		</HelmetProvider>
 	</React.StrictMode>
 );
