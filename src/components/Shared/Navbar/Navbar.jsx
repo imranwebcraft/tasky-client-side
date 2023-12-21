@@ -6,7 +6,7 @@ const Navbar = () => {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<header className="border-b bg-slate-900 sticky top-0">
+		<header className="border-b bg-slate-900 sticky top-0 z-50">
 			<nav className="relative h-20 py-5 px-[20px] md:px-[30px] md:flex justify-between items-center max-w-7xl mx-auto">
 				{/* Logo */}
 				<Link className=" md:flex-1 flex gap-2 items-center">
