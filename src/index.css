@@ -19,6 +19,6 @@
 		@apply hover:text-indigo-500 font-medium duration-200 text-white;
 	}
 	.btn-white {
-		@apply border font-medium border-gray-900 text-black px-4 py-2 hover:bg-indigo-500 hover:text-white transition-all duration-200 ease-in hover:-translate-y-1;
+		@apply border font-medium border-gray-900 text-black px-4 py-2 hover:bg-indigo-500 hover:text-white transition-all duration-200 ease-in hover:-translate-y-1 shadow-lg;
 	}
 }

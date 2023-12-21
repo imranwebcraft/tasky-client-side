@@ -1,5 +1,6 @@
 import FixWidth from '../../UI/FixWidth';
 import banner from '../../assets/banner.svg';
+import bannerbg from '../../assets/bannerbg.svg';
 
 const Banner = () => {
 	return (
@@ -26,9 +27,9 @@ const Banner = () => {
 							className="w-full h-full object-cover"
 						/>
 					</div>
+					{/* Gradient BG */}
+					<img src={bannerbg} alt="" className=" absolute -z-30" />
 				</div>
-
-				{/* Gradient BG */}
 			</>
 		</FixWidth>
 	);
