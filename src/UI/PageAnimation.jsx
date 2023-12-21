@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 
-const AnimationWraper = ({
+const PageAnimation = ({
 	children,
 	initial = { opacity: 0 },
 	animate = { opacity: 1 },
@@ -23,4 +23,4 @@ const AnimationWraper = ({
 	);
 };
 
-export default AnimationWraper;
+export default PageAnimation;

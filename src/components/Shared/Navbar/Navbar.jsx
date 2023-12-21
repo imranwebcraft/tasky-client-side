@@ -74,7 +74,7 @@ const Navbar = () => {
 					<Link to="/signup">
 						<button className="btn mt-5 md:mt-0">Sign Up</button>
 					</Link>
-					<Link to="/dashboard">
+					<Link to="/dashboard/taskmanager">
 						<button className="btn mt-5 md:mt-0">Dashboard</button>
 					</Link>
 				</div>

@@ -8,6 +8,7 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import Signup from '../pages/Signup/Signup';
 import Login from '../pages/Login/Login';
 import Dashboard from '../Layout/Dashboard/Dashboard';
+import Taskmanager from '../pages/Dashboard/Taskmanager/Taskmanager';
 
 const router = createBrowserRouter([
 	{
@@ -44,6 +45,12 @@ const router = createBrowserRouter([
 	{
 		path: '/dashboard',
 		element: <Dashboard />,
+		children: [
+			{
+				path: 'taskmanager',
+				element: <Taskmanager />,
+			},
+		],
 	},
 ]);
 
