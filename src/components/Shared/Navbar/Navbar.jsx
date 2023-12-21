@@ -9,12 +9,12 @@ const Navbar = () => {
 		<header className="border-b bg-slate-900 sticky top-0">
 			<nav className="relative h-20 py-5 px-[20px] md:px-[30px] md:flex justify-between items-center max-w-7xl mx-auto">
 				{/* Logo */}
-				<div className=" md:flex-1 flex gap-2 items-center">
+				<Link className=" md:flex-1 flex gap-2 items-center">
 					<img src={logo} alt="website logo" />
-					<Link className=" text-2xl font-bold text-white">
+					<div className=" text-2xl font-bold text-white">
 						Task<span className=" text-indigo-500 font-bold">y</span>
-					</Link>
-				</div>
+					</div>
+				</Link>
 				{/* Middle Portion - link */}
 
 				{/* Mobile Menu Icons */}
