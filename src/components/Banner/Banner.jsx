@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import FixWidth from '../../UI/FixWidth';
 import banner from '../../assets/banner.svg';
 import bannerbg from '../../assets/bannerbg.svg';
@@ -16,7 +17,9 @@ const Banner = () => {
 						<p className="text-lg text-gray-700">
 							Create, Track and Organize your work.
 						</p>
-						<button className="btn-white mt-5"> Let&apos;s Explore </button>
+						<Link to="/login">
+							<button className="btn-white mt-5"> Let&apos;s Explore </button>
+						</Link>
 					</div>
 
 					{/* Right Side */}

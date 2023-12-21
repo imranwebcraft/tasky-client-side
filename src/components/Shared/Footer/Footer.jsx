@@ -3,25 +3,25 @@ import logo from '../../../assets/TaskyLogo.svg';
 
 const Footer = () => {
 	return (
-		<footer className=" relative bg-white">
+		<footer className=" relative bg-slate-900 text-white">
 			<div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
 				<div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
 					<div>
 						<Link className="text-teal-600 flex items-center gap-2">
 							<img src={logo} alt="logo" />
-							<div className=" text-2xl font-bold text-black">
+							<div className=" text-2xl font-bold text-white">
 								Task<span className=" text-indigo-500 font-bold">y</span>
 							</div>
 						</Link>
 
-						<p className="mt-4 max-w-xs text-gray-500">
+						<p className="mt-4 max-w-xs  text-white">
 							Your daily task manager assistance that helps you to be more
 							productive in your daily life.
 						</p>
 
 						<ul className="mt-8 flex gap-6">
 							<li>
-								<a className="text-gray-700 transition hover:cursor-pointer hover:text-indigo-500">
+								<a className="text-gray-100 transition hover:cursor-pointer hover:text-indigo-500">
 									<span className="sr-only">Facebook</span>
 									<svg
 										className="h-6 w-6 "
@@ -39,7 +39,7 @@ const Footer = () => {
 							</li>
 
 							<li>
-								<a className="text-gray-700 transition hover:cursor-pointer hover:text-indigo-500">
+								<a className="text-gray-100 transition hover:cursor-pointer hover:text-indigo-500">
 									<span className="sr-only">Instagram</span>
 
 									<svg
@@ -58,7 +58,7 @@ const Footer = () => {
 							</li>
 
 							<li>
-								<a className="text-gray-700 transition hover:cursor-pointer hover:text-indigo-500">
+								<a className="text-gray-100 transition hover:cursor-pointer hover:text-indigo-500">
 									<span className="sr-only">Twitter</span>
 
 									<svg
@@ -76,29 +76,29 @@ const Footer = () => {
 
 					<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
 						<div>
-							<p className="font-medium text-gray-900">Services</p>
+							<p className="font-medium text-lg text-gray-100">Services</p>
 
 							<ul className="mt-6 space-y-4 text-sm">
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Task Create
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Manage
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Track
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Update
 									</a>
 								</li>
@@ -106,23 +106,23 @@ const Footer = () => {
 						</div>
 
 						<div>
-							<p className="font-medium text-gray-900">Company</p>
+							<p className="font-medium text-lg text-gray-100">Company</p>
 
 							<ul className="mt-6 space-y-4 text-sm">
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										About
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Meet the Team
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Accounts Review
 									</a>
 								</li>
@@ -130,23 +130,23 @@ const Footer = () => {
 						</div>
 
 						<div>
-							<p className="font-medium text-gray-900">Helpful Links</p>
+							<p className="font-medium text-lg text-gray-100">Helpful Links</p>
 
 							<ul className="mt-6 space-y-4 text-sm">
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Contact
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										FAQs
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Live Chat
 									</a>
 								</li>
@@ -154,29 +154,29 @@ const Footer = () => {
 						</div>
 
 						<div>
-							<p className="font-medium text-gray-900">Legal</p>
+							<p className="font-medium text-lg text-gray-100">Legal</p>
 
 							<ul className="mt-6 space-y-4 text-sm">
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Accessibility
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Returns Policy
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Refund Policy
 									</a>
 								</li>
 
 								<li className=" hover: cursor-pointer hover:underline transition">
-									<a className="text-gray-700 transition hover:text-gray-600 text-base">
+									<a className="text-gray-100 transition hover:text-white text-base">
 										Hiring Statistics
 									</a>
 								</li>
@@ -185,7 +185,7 @@ const Footer = () => {
 					</div>
 				</div>
 
-				<p className="text-xs text-gray-500">
+				<p className="text-xs text-gray-100">
 					&copy; 2023. Tasky. All rights reserved.
 				</p>
 			</div>
