@@ -3,10 +3,10 @@ import Navbar from '../../components/Shared/Navbar/Navbar';
 
 const Mainlayout = () => {
 	return (
-		<div className=" font-primary">
+		<div className=" font-primary tracking-wide">
 			<Navbar />
 			<Outlet></Outlet>
-			{/* <p>Footer</p> */}
+			<p>Footer</p>
 		</div>
 	);
 };

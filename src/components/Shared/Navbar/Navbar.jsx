@@ -6,8 +6,8 @@ const Navbar = () => {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<header className="relative border-b bg-slate-900">
-			<nav className="h-20 py-5 px-[20px] md:px-5 md:flex justify-between items-center max-w-7xl mx-auto">
+		<header className="border-b bg-slate-900 sticky top-0">
+			<nav className="relative h-20 py-5 px-[20px] md:px-[30px] md:flex justify-between items-center max-w-7xl mx-auto">
 				{/* Logo */}
 				<div className=" md:flex-1 flex gap-2 items-center">
 					<img src={logo} alt="website logo" />
@@ -30,8 +30,10 @@ const Navbar = () => {
 				</div>
 
 				<div
-					className={`absolute opacity-0 md:opacity-100 md:relative top-full md:inset-0 px-7 md:px-0 py-8 md:py-0 w-[100%] bg-slate-800 md:bg-transparent md:flex-1 md:flex justify-between items-center transition-all duration-500 ease-in ${
-						open ? 'left-0 opacity-100' : 'left-[-1000px] opacity-0'
+					className={`absolute md:relative md:opacity-100 top-full md:inset-0 px-7 md:px-0 py-8 md:py-0 w-[100%] md:bg-transparent md:flex-1 md:flex justify-between items-center transition-all duration-500 ${
+						open
+							? 'left-0 opacity-100 bg-slate-800'
+							: 'left-[-1000px] opacity-0'
 					}`}
 				>
 					<ul className="flex flex-col md:flex-row gap-10 md:gap-16">
