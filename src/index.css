@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import '@flaticon/flaticon-uicons/css/all/all';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.active {
+		@apply text-indigo-500 font-medium;
+	}
+	.btn {
+		@apply border border-gray-300 text-white px-4 py-2 hover:bg-indigo-500 hover:text-white transition-all duration-200 ease-in;
+	}
+	.btn-inactive {
+		@apply hover:text-indigo-500 font-medium duration-200 text-white;
+	}
+}
