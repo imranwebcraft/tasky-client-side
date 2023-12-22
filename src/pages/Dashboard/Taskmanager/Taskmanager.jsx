@@ -185,7 +185,7 @@ const Taskmanager = () => {
 						{...register('priority', { required: true })}
 						className="w-full border rounded border-gray-500 py-2 focus:bg-slate-100 focus:border-indigo-500  placeholder:text-gray-600"
 					>
-						<option value="" disabled>
+						<option selected disabled>
 							Select Priority
 						</option>
 						<option value="High">High</option>
@@ -216,7 +216,7 @@ const Taskmanager = () => {
 			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
 				{/* Tdod */}
 
-				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg">
+				<div className=" min-h-[500px] p-10 bg-[#EEF2F5] rounded-lg">
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
 						<MdOutlineTaskAlt />
 						<span>Todo</span>
