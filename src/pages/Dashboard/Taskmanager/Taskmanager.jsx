@@ -7,34 +7,45 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import useAxiosPublic from '../../../hook/useAxiosPublic';
-import { LuCalendar } from 'react-icons/lu';
 import useTodos from '../../../hook/useTodos';
-import { formatDate } from '../../../Helper/getDeadline';
-import { useDrag } from 'react-dnd';
+import FTodos from './FTodos';
+import { useDrop } from 'react-dnd';
+import FOngoin from './FOngoin';
+import FCompleted from './FCompleted';
 
 const Taskmanager = () => {
-	// React DND
-	const [{ isDragging }, drag] = useDrag(() => ({
-		type: 'task',
-		collect: (monitor) => ({
-			isDragging: !!monitor.isDragging(),
-		}),
-	}));
-
-	console.log(isDragging);
-
 	const [loading, setLoading] = useState(false);
 	const { logOut, user } = useContext(AuthContext);
 	const axiosPublic = useAxiosPublic();
 
-	// State for task filter based on staus
-	// const [todo, setTodo] = useState([]);
-	// const [ongoin, setongoin] = useState([]);
-	// const [completed, setcompleted] = useState([]);
-
 	// Use todos
 	const [todos, refetch] = useTodos();
 
+	const [{ isOver }, drop] = useDrop(() => ({
+		accept: 'task',
+		drop: (item) => addItemToSection(item.id),
+		collect: (monitor) => ({
+			isOver: !!monitor.isOver(),
+		}),
+	}));
+
+	const addItemToSection = async (id) => {
+		console.log(id);
+		try {
+			const res = await axiosPublic.put(`/todos/${id}`, {
+				status: 'todo',
+			});
+			console.log(res);
+			if (res.data) {
+				refetch();
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		console.log('droped', id);
+	};
+
+	// Filter State
 	const ftodos = todos.filter((task) => task.status === 'todo');
 	const fongoing = todos.filter((task) => task.status === 'ongoing');
 	const fcompleted = todos.filter((task) => task.status === 'completed');
@@ -244,50 +255,27 @@ const Taskmanager = () => {
 
 			{/*--------- Show Task -------- */}
 
-			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
+			<div
+				ref={drop}
+				className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10"
+			>
 				{/* -------- Todo -------- */}
 				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
 					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
 						<MdOutlineTaskAlt />
 						<span>Todo</span>
-						<span className=" text-base text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
+						<span className=" text-sm text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
 							{ftodos?.length}
 						</span>
 					</h3>
 					{/* -------- TODO TASK ------- */}
-					{ftodos?.map((todo) => (
-						<div
-							ref={drag}
-							key={todo._id}
-							className=" p-5 bg-white rounded-xl mt-5 space-y-2 hover:cursor-pointer"
-						>
-							<div className=" md:flex justify-between">
-								<p className=" text-2xl font-medium">{todo.task_name}</p>
-								<span className=" bg-purple-500 text-white px-3 py-1">
-									High
-								</span>
-							</div>
-							<p className=" text-gray-700">{todo.task_description}</p>
-							<div className=" md:flex nd:items-center gap-5">
-								<p className=" font-medium flex items-center gap-1">
-									<LuCalendar />
-									{formatDate(new Date(todo.deadline))}
-								</p>
-								<div></div>
-								<div className=" mt-2 flex flex-wrap gap-5 justify-center ">
-									<button className=" hover:text-indigo-500 transition-all duration-300">
-										<i className="fi fi-rr-pencil text-xl"></i>
-									</button>
-									<button
-										onClick={() => handleDeleteTask(todo._id)}
-										className=" hover:text-red-500 transition-all duration-300"
-									>
-										<i className="fi fi-rr-trash text-xl"></i>
-									</button>
-								</div>
-							</div>
-						</div>
+					{ftodos?.map((todo, index) => (
+						<FTodos
+							key={index}
+							todo={todo}
+							handleDeleteTask={handleDeleteTask}
+						></FTodos>
 					))}
 				</div>
 				{/*-------- Ongoing ---------- */}
@@ -296,42 +284,17 @@ const Taskmanager = () => {
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-cyan-500 py-2 text-white rounded">
 						<AiOutlineLoading3Quarters />
 						<span>On Going</span>
-						<span className=" text-base text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
+						<span className=" text-sm text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
 							{fongoing?.length}
 						</span>
 					</h3>
 					{/* -------- ONGOING TASK ------- */}
-					{fongoing?.map((todo) => (
-						<div
-							key={todo._id}
-							className=" p-5 bg-white rounded-xl mt-5 space-y-2 hover:cursor-pointer"
-						>
-							<div className=" md:flex justify-between">
-								<p className=" text-2xl font-medium">{todo.task_name}</p>
-								<span className=" bg-purple-500 text-white px-3 py-1">
-									High
-								</span>
-							</div>
-							<p className=" text-gray-700">{todo.task_description}</p>
-							<div className=" md:flex nd:items-center gap-5">
-								<p className=" font-medium flex items-center gap-1">
-									<LuCalendar />
-									{formatDate(new Date(todo.deadline))}
-								</p>
-								<div></div>
-								<div className=" mt-2 flex flex-wrap gap-5 justify-center ">
-									<button className=" hover:text-indigo-500 transition-all duration-300">
-										<i className="fi fi-rr-pencil text-xl"></i>
-									</button>
-									<button
-										onClick={() => handleDeleteTask(todo._id)}
-										className=" hover:text-red-500 transition-all duration-300"
-									>
-										<i className="fi fi-rr-trash text-xl"></i>
-									</button>
-								</div>
-							</div>
-						</div>
+					{fongoing?.map((todo, index) => (
+						<FOngoin
+							key={index}
+							todo={todo}
+							handleDeleteTask={handleDeleteTask}
+						></FOngoin>
 					))}
 				</div>
 				{/* --------- Complete ---------- */}
@@ -340,42 +303,17 @@ const Taskmanager = () => {
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-green-500 py-2 text-white rounded">
 						<IoMdDoneAll />
 						<span>Completed</span>
-						<span className=" text-base text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
+						<span className=" text-sm text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
 							{fcompleted?.length}
 						</span>
 					</h3>
 					{/* -------- COMPLETED TASK ------- */}
-					{fcompleted?.map((todo) => (
-						<div
-							key={todo._id}
-							className=" p-5 bg-white rounded-xl mt-5 space-y-2 hover:cursor-pointer"
-						>
-							<div className=" md:flex justify-between">
-								<p className=" text-2xl font-medium">{todo.task_name}</p>
-								<span className=" bg-purple-500 text-white px-3 py-1">
-									High
-								</span>
-							</div>
-							<p className=" text-gray-700">{todo.task_description}</p>
-							<div className=" md:flex nd:items-center gap-5">
-								<p className=" font-medium flex items-center gap-1">
-									<LuCalendar />
-									{formatDate(new Date(todo.deadline))}
-								</p>
-								<div></div>
-								<div className=" mt-2 flex flex-wrap gap-5 justify-center ">
-									<button className=" hover:text-indigo-500 transition-all duration-300">
-										<i className="fi fi-rr-pencil text-xl"></i>
-									</button>
-									<button
-										onClick={() => handleDeleteTask(todo._id)}
-										className=" hover:text-red-500 transition-all duration-300"
-									>
-										<i className="fi fi-rr-trash text-xl"></i>
-									</button>
-								</div>
-							</div>
-						</div>
+					{fcompleted?.map((todo, index) => (
+						<FCompleted
+							key={index}
+							todo={todo}
+							handleDeleteTask={handleDeleteTask}
+						></FCompleted>
 					))}
 				</div>
 			</div>
