@@ -22,7 +22,9 @@ const FTodos = ({ todo, handleDeleteTask }) => {
 		>
 			<div className=" md:flex justify-between">
 				<p className=" text-2xl font-medium">{todo.task_name}</p>
-				<span className=" bg-purple-500 text-white px-3 py-1">High</span>
+				<span className=" bg-purple-500 text-white px-3 py-1">
+					{todo.priority}
+				</span>
 			</div>
 			<p className=" text-gray-700">{todo.task_description}</p>
 			<div className=" md:flex nd:items-center gap-5">

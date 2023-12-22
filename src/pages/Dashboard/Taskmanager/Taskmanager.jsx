@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { MdErrorOutline, MdOutlineTaskAlt } from 'react-icons/md';
 import { AiOutlineLoading, AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { IoMdDoneAll } from 'react-icons/io';
@@ -54,7 +55,6 @@ const Taskmanager = () => {
 			const res = await axiosPublic.put(`/todos/${id}`, {
 				status: dropZoneStatus,
 			});
-			console.log(res);
 			if (res.data) {
 				refetch();
 			}
@@ -133,7 +133,7 @@ const Taskmanager = () => {
 		<div className=" w-[100%]">
 			{/* ----------Top-------- */}
 			<div className="py-10 w-full pr-10">
-				<div className=" flex justify-between items-center">
+				<div className=" md:flex justify-between items-center">
 					{/* Search */}
 					<div className="relative">
 						<input
@@ -166,7 +166,7 @@ const Taskmanager = () => {
 							</button>
 						</span>
 					</div>
-					<div className=" flex gap-5">
+					<div className=" flex justify-center gap-5 mt-5 md:mt-0">
 						<div className="relative flex-shrink-0">
 							<span className="absolute bottom-0 right-0 w-4 h-4 dark:bg-green-600 border rounded-full dark:text-gray-100 dark:border-gray-900"></span>
 							<img

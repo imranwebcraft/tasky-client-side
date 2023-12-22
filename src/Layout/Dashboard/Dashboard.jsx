@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import logo from '../../assets/TaskyLogo.svg';
-import Footer from '../../components/Shared/Footer/Footer';
 import { Helmet } from 'react-helmet-async';
 import PageAnimation from '../../UI/PageAnimation';
 
@@ -67,7 +66,6 @@ const Dashboard = () => {
 					</div>
 					<Outlet />
 				</div>
-				<Footer />
 			</PageAnimation>
 		</>
 	);
