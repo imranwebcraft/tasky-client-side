@@ -21,19 +21,38 @@ const Taskmanager = () => {
 	// Use todos
 	const [todos, refetch] = useTodos();
 
+	// For Todo
 	const [{ isOver }, drop] = useDrop(() => ({
 		accept: 'task',
-		drop: (item) => addItemToSection(item.id),
+		drop: (item) => addItemToSection(item.id, 'todo'),
 		collect: (monitor) => ({
 			isOver: !!monitor.isOver(),
 		}),
 	}));
 
-	const addItemToSection = async (id) => {
-		console.log(id);
+	// For Ongoing
+	const [{ isOver: isOverOngoing }, dropOngoing] = useDrop(() => ({
+		accept: 'task',
+		drop: (item) => addItemToSection(item.id, 'ongoing'),
+		collect: (monitor) => ({
+			isOver: !!monitor.isOver(),
+		}),
+	}));
+
+	// For Completed
+	const [{ isOver: isOverCompleted }, dropCompleted] = useDrop(() => ({
+		accept: 'task',
+		drop: (item) => addItemToSection(item.id, 'completed'),
+		collect: (monitor) => ({
+			isOver: !!monitor.isOver(),
+		}),
+	}));
+
+	const addItemToSection = async (id, dropZoneStatus) => {
+		console.log(id, dropZoneStatus);
 		try {
 			const res = await axiosPublic.put(`/todos/${id}`, {
-				status: 'todo',
+				status: dropZoneStatus,
 			});
 			console.log(res);
 			if (res.data) {
@@ -42,7 +61,6 @@ const Taskmanager = () => {
 		} catch (error) {
 			console.log(error);
 		}
-		console.log('droped', id);
 	};
 
 	// Filter State
@@ -255,12 +273,9 @@ const Taskmanager = () => {
 
 			{/*--------- Show Task -------- */}
 
-			<div
-				ref={drop}
-				className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10"
-			>
+			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
 				{/* -------- Todo -------- */}
-				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
+				<div ref={drop} className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
 					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
 						<MdOutlineTaskAlt />
@@ -279,7 +294,7 @@ const Taskmanager = () => {
 					))}
 				</div>
 				{/*-------- Ongoing ---------- */}
-				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg ">
+				<div ref={dropOngoing} className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg ">
 					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-cyan-500 py-2 text-white rounded">
 						<AiOutlineLoading3Quarters />
@@ -298,7 +313,7 @@ const Taskmanager = () => {
 					))}
 				</div>
 				{/* --------- Complete ---------- */}
-				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
+				<div ref={dropCompleted} className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
 					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-green-500 py-2 text-white rounded">
 						<IoMdDoneAll />
