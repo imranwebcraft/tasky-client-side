@@ -10,8 +10,19 @@ import useAxiosPublic from '../../../hook/useAxiosPublic';
 import { LuCalendar } from 'react-icons/lu';
 import useTodos from '../../../hook/useTodos';
 import { formatDate } from '../../../Helper/getDeadline';
+import { useDrag } from 'react-dnd';
 
 const Taskmanager = () => {
+	// React DND
+	const [{ isDragging }, drag] = useDrag(() => ({
+		type: 'task',
+		collect: (monitor) => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+	}));
+
+	console.log(isDragging);
+
 	const [loading, setLoading] = useState(false);
 	const { logOut, user } = useContext(AuthContext);
 	const axiosPublic = useAxiosPublic();
@@ -80,7 +91,7 @@ const Taskmanager = () => {
 		axiosPublic
 			.delete(`/todos/${id}`)
 			.then(() => {
-				toast.success('Task deleted successfully');
+				toast.success('💀Task deleted successfully');
 				refetch();
 				setLoading(false);
 			})
@@ -234,7 +245,7 @@ const Taskmanager = () => {
 			{/*--------- Show Task -------- */}
 
 			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
-				{/* -------- Tdod -------- */}
+				{/* -------- Todo -------- */}
 				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
 					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
@@ -244,11 +255,12 @@ const Taskmanager = () => {
 							{ftodos?.length}
 						</span>
 					</h3>
-					{/* -------- Task ------- */}
+					{/* -------- TODO TASK ------- */}
 					{ftodos?.map((todo) => (
 						<div
+							ref={drag}
 							key={todo._id}
-							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
+							className=" p-5 bg-white rounded-xl mt-5 space-y-2 hover:cursor-pointer"
 						>
 							<div className=" md:flex justify-between">
 								<p className=" text-2xl font-medium">{todo.task_name}</p>
@@ -288,11 +300,11 @@ const Taskmanager = () => {
 							{fongoing?.length}
 						</span>
 					</h3>
-					{/* -------- Task ------- */}
+					{/* -------- ONGOING TASK ------- */}
 					{fongoing?.map((todo) => (
 						<div
 							key={todo._id}
-							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
+							className=" p-5 bg-white rounded-xl mt-5 space-y-2 hover:cursor-pointer"
 						>
 							<div className=" md:flex justify-between">
 								<p className=" text-2xl font-medium">{todo.task_name}</p>
@@ -332,11 +344,11 @@ const Taskmanager = () => {
 							{fcompleted?.length}
 						</span>
 					</h3>
-					{/* -------- Task ------- */}
+					{/* -------- COMPLETED TASK ------- */}
 					{fcompleted?.map((todo) => (
 						<div
 							key={todo._id}
-							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
+							className=" p-5 bg-white rounded-xl mt-5 space-y-2 hover:cursor-pointer"
 						>
 							<div className=" md:flex justify-between">
 								<p className=" text-2xl font-medium">{todo.task_name}</p>
