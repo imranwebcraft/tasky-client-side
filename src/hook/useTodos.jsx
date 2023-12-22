@@ -7,7 +7,7 @@ const useTodos = () => {
 	const { user } = useContext(AuthContext);
 	const axiosPublic = useAxiosPublic();
 
-	const { data: todos, refetch } = useQuery({
+	const { data: todos = [], refetch } = useQuery({
 		queryKey: ['todos'],
 		queryFn: async () => {
 			const res = await axiosPublic.get(`/todos/${user.email}`);

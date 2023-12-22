@@ -16,8 +16,17 @@ const Taskmanager = () => {
 	const { logOut, user } = useContext(AuthContext);
 	const axiosPublic = useAxiosPublic();
 
+	// State for task filter based on staus
+	// const [todo, setTodo] = useState([]);
+	// const [ongoin, setongoin] = useState([]);
+	// const [completed, setcompleted] = useState([]);
+
 	// Use todos
 	const [todos, refetch] = useTodos();
+
+	const ftodos = todos.filter((task) => task.status === 'todo');
+	const fongoing = todos.filter((task) => task.status === 'ongoing');
+	const fcompleted = todos.filter((task) => task.status === 'completed');
 
 	const navigate = useNavigate();
 	const userEmail = user.email;
@@ -49,6 +58,7 @@ const Taskmanager = () => {
 			task_description: data.task_description,
 			deadline: data.deadline,
 			priority: data.priority,
+			status: 'todo',
 		};
 		console.log(todosData);
 		try {
@@ -66,11 +76,22 @@ const Taskmanager = () => {
 	};
 
 	const handleDeleteTask = (id) => {
-		console.log(id);
+		setLoading(true);
+		axiosPublic
+			.delete(`/todos/${id}`)
+			.then(() => {
+				toast.success('Task deleted successfully');
+				refetch();
+				setLoading(false);
+			})
+			.catch((err) => {
+				toast.error(err.message);
+			});
 	};
 
 	return (
 		<div className=" w-[100%]">
+			{/* ----------Top-------- */}
 			<div className="py-10 w-full pr-10">
 				<div className=" flex justify-between items-center">
 					{/* Search */}
@@ -128,7 +149,7 @@ const Taskmanager = () => {
 				</div>
 			</div>
 
-			{/* Task Add Form */}
+			{/* ----- Task Add Form -------- */}
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className="w-[80%] max-w-[400px] mx-auto"
@@ -184,10 +205,9 @@ const Taskmanager = () => {
 					<select
 						{...register('priority', { required: true })}
 						className="w-full border rounded border-gray-500 py-2 focus:bg-slate-100 focus:border-indigo-500  placeholder:text-gray-600"
+						defaultValue="Select Priority"
 					>
-						<option selected disabled>
-							Select Priority
-						</option>
+						<option disabled>Select Priority</option>
 						<option value="High">High</option>
 						<option value="Medium">Medium</option>
 						<option value="Low">Low</option>
@@ -211,10 +231,10 @@ const Taskmanager = () => {
 				</div>
 			</form>
 
-			{/* Show Task */}
+			{/*--------- Show Task -------- */}
 
 			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
-				{/* Tdod */}
+				{/* -------- Tdod -------- */}
 
 				<div className=" min-h-[500px] p-10 bg-[#EEF2F5] rounded-lg">
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
@@ -222,7 +242,7 @@ const Taskmanager = () => {
 						<span>Todo</span>
 					</h3>
 
-					{todos?.map((todo) => (
+					{ftodos?.map((todo) => (
 						<div
 							key={todo._id}
 							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
@@ -255,63 +275,83 @@ const Taskmanager = () => {
 						</div>
 					))}
 				</div>
-				{/* Ongoing */}
+				{/*-------- Ongoing ---------- */}
 				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg ">
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-cyan-500 py-2 text-white rounded">
 						<AiOutlineLoading3Quarters />
 						<span>On Going</span>
 					</h3>
-					<div className=" p-5 bg-white rounded-xl mt-5 space-y-2">
-						<p className=" text-2xl font-medium">Task Name</p>
-						<p className=" text-gray-700">
-							Task Description Lorem ipsum dolor sit, amet consectetur
-							adipisicing elit. Cum, assumenda.
-						</p>
-						<p className="font-medium flex items-center gap-1">
-							<LuCalendar />
-							22 Dec 2023
-						</p>
-						<div>
-							<span className=" bg-purple-500 text-white px-3 py-1">High</span>
+					{fongoing?.map((todo) => (
+						<div
+							key={todo._id}
+							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
+						>
+							<div className=" flex justify-between">
+								<p className=" text-2xl font-medium">{todo.task_name}</p>
+								<span className=" bg-purple-500 text-white px-3 py-1">
+									High
+								</span>
+							</div>
+							<p className=" text-gray-700">{todo.task_description}</p>
+							<div className=" flex items-center gap-5">
+								<p className=" font-medium flex items-center gap-1">
+									<LuCalendar />
+									{formatDate(new Date(todo.deadline))}
+								</p>
+								<div></div>
+								<div className=" mt-2 flex flex-wrap gap-5 justify-center ">
+									<button className=" hover:text-indigo-500 transition-all duration-300">
+										<i className="fi fi-rr-pencil text-xl"></i>
+									</button>
+									<button
+										onClick={() => handleDeleteTask(todo._id)}
+										className=" hover:text-red-500 transition-all duration-300"
+									>
+										<i className="fi fi-rr-trash text-xl"></i>
+									</button>
+								</div>
+							</div>
 						</div>
-						<div className=" mt-2 flex gap-5 justify-center ">
-							<button className=" hover:text-indigo-500 transition-all duration-300">
-								<i className="fi fi-rr-pencil text-xl"></i>
-							</button>
-							<button className=" hover:text-red-500 transition-all duration-300">
-								<i className="fi fi-rr-trash text-xl"></i>
-							</button>
-						</div>
-					</div>
+					))}
 				</div>
-				{/* Complete */}
+				{/* --------- Complete ---------- */}
 				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg">
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-green-500 py-2 text-white rounded">
 						<IoMdDoneAll />
 						<span>Completed</span>
 					</h3>
-					<div className=" p-5 bg-white rounded-xl mt-5 space-y-2">
-						<p className=" text-2xl font-medium">Task Name</p>
-						<p className=" text-gray-700">
-							Task Description Lorem ipsum dolor sit, amet consectetur
-							adipisicing elit. Cum, assumenda.
-						</p>
-						<p className="font-medium flex items-center gap-1">
-							<LuCalendar />
-							22 Dec 2023
-						</p>
-						<div>
-							<span className=" bg-purple-500 text-white px-3 py-1">High</span>
+					{fcompleted?.map((todo) => (
+						<div
+							key={todo._id}
+							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
+						>
+							<div className=" flex justify-between">
+								<p className=" text-2xl font-medium">{todo.task_name}</p>
+								<span className=" bg-purple-500 text-white px-3 py-1">
+									High
+								</span>
+							</div>
+							<p className=" text-gray-700">{todo.task_description}</p>
+							<div className=" flex items-center gap-5">
+								<p className=" font-medium flex items-center gap-1">
+									<LuCalendar />
+									{formatDate(new Date(todo.deadline))}
+								</p>
+								<div></div>
+								<div className=" mt-2 flex flex-wrap gap-5 justify-center ">
+									<button className=" hover:text-indigo-500 transition-all duration-300">
+										<i className="fi fi-rr-pencil text-xl"></i>
+									</button>
+									<button
+										onClick={() => handleDeleteTask(todo._id)}
+										className=" hover:text-red-500 transition-all duration-300"
+									>
+										<i className="fi fi-rr-trash text-xl"></i>
+									</button>
+								</div>
+							</div>
 						</div>
-						<div className=" mt-2 flex gap-5 justify-center ">
-							<button className=" hover:text-indigo-500 transition-all duration-300">
-								<i className="fi fi-rr-pencil text-xl"></i>
-							</button>
-							<button className=" hover:text-red-500 transition-all duration-300">
-								<i className="fi fi-rr-trash text-xl"></i>
-							</button>
-						</div>
-					</div>
+					))}
 				</div>
 			</div>
 		</div>
