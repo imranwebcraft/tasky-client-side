@@ -7,11 +7,17 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import { useForm } from 'react-hook-form';
 import useAxiosPublic from '../../../hook/useAxiosPublic';
+import { LuCalendar } from 'react-icons/lu';
+import useTodos from '../../../hook/useTodos';
+import { formatDate } from '../../../Helper/getDeadline';
 
 const Taskmanager = () => {
 	const [loading, setLoading] = useState(false);
 	const { logOut, user } = useContext(AuthContext);
 	const axiosPublic = useAxiosPublic();
+
+	// Use todos
+	const [todos, refetch] = useTodos();
 
 	const navigate = useNavigate();
 	const userEmail = user.email;
@@ -49,6 +55,7 @@ const Taskmanager = () => {
 			const res = await axiosPublic.post('/todos', todosData);
 			if (res.data) {
 				toast.success('Task created successfully');
+				refetch();
 				reset();
 				setLoading(false);
 			}
@@ -56,6 +63,10 @@ const Taskmanager = () => {
 			console.log(error);
 			setLoading(false);
 		}
+	};
+
+	const handleDeleteTask = (id) => {
+		console.log(id);
 	};
 
 	return (
@@ -204,32 +215,45 @@ const Taskmanager = () => {
 
 			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
 				{/* Tdod */}
+
 				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg">
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
 						<MdOutlineTaskAlt />
 						<span>Todo</span>
 					</h3>
-					<div className=" p-5 bg-white rounded-xl mt-5 space-y-3">
-						<p className=" text-2xl font-medium">Task Name</p>
-						<p className=" text-gray-700">
-							Task Description Lorem ipsum dolor sit, amet consectetur
-							adipisicing elit. Cum, assumenda.
-						</p>
-						<p className="">
-							<i className="fi fi-rr-calendar-lines pr-2"></i>22 Dec 2023
-						</p>
-						<div>
-							<span className=" bg-purple-500 text-white px-3 py-1">High</span>
+
+					{todos?.map((todo) => (
+						<div
+							key={todo._id}
+							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
+						>
+							<div className=" flex justify-between">
+								<p className=" text-2xl font-medium">{todo.task_name}</p>
+								<span className=" bg-purple-500 text-white px-3 py-1">
+									High
+								</span>
+							</div>
+							<p className=" text-gray-700">{todo.task_description}</p>
+							<div className=" flex items-center gap-5">
+								<p className=" font-medium flex items-center gap-1">
+									<LuCalendar />
+									{formatDate(new Date(todo.deadline))}
+								</p>
+								<div></div>
+								<div className=" mt-2 flex flex-wrap gap-5 justify-center ">
+									<button className=" hover:text-indigo-500 transition-all duration-300">
+										<i className="fi fi-rr-pencil text-xl"></i>
+									</button>
+									<button
+										onClick={() => handleDeleteTask(todo._id)}
+										className=" hover:text-red-500 transition-all duration-300"
+									>
+										<i className="fi fi-rr-trash text-xl"></i>
+									</button>
+								</div>
+							</div>
 						</div>
-						<div className=" mt-2 flex gap-5 justify-center ">
-							<button className=" hover:text-indigo-500 transition-all duration-300">
-								<i className="fi fi-rr-pencil"></i>
-							</button>
-							<button className=" hover:text-red-500 transition-all duration-300">
-								<i className="fi fi-rr-trash"></i>
-							</button>
-						</div>
-					</div>
+					))}
 				</div>
 				{/* Ongoing */}
 				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg ">
@@ -237,24 +261,25 @@ const Taskmanager = () => {
 						<AiOutlineLoading3Quarters />
 						<span>On Going</span>
 					</h3>
-					<div className=" p-5 bg-white rounded-xl mt-5 space-y-3">
+					<div className=" p-5 bg-white rounded-xl mt-5 space-y-2">
 						<p className=" text-2xl font-medium">Task Name</p>
 						<p className=" text-gray-700">
 							Task Description Lorem ipsum dolor sit, amet consectetur
 							adipisicing elit. Cum, assumenda.
 						</p>
-						<p className="">
-							<i className="fi fi-rr-calendar-lines pr-2"></i>22 Dec 2023
+						<p className="font-medium flex items-center gap-1">
+							<LuCalendar />
+							22 Dec 2023
 						</p>
 						<div>
 							<span className=" bg-purple-500 text-white px-3 py-1">High</span>
 						</div>
 						<div className=" mt-2 flex gap-5 justify-center ">
 							<button className=" hover:text-indigo-500 transition-all duration-300">
-								<i className="fi fi-rr-pencil"></i>
+								<i className="fi fi-rr-pencil text-xl"></i>
 							</button>
 							<button className=" hover:text-red-500 transition-all duration-300">
-								<i className="fi fi-rr-trash"></i>
+								<i className="fi fi-rr-trash text-xl"></i>
 							</button>
 						</div>
 					</div>
@@ -265,24 +290,25 @@ const Taskmanager = () => {
 						<IoMdDoneAll />
 						<span>Completed</span>
 					</h3>
-					<div className=" p-5 bg-white rounded-xl mt-5 space-y-3">
+					<div className=" p-5 bg-white rounded-xl mt-5 space-y-2">
 						<p className=" text-2xl font-medium">Task Name</p>
 						<p className=" text-gray-700">
 							Task Description Lorem ipsum dolor sit, amet consectetur
 							adipisicing elit. Cum, assumenda.
 						</p>
-						<p className="">
-							<i className="fi fi-rr-calendar-lines pr-2"></i>22 Dec 2023
+						<p className="font-medium flex items-center gap-1">
+							<LuCalendar />
+							22 Dec 2023
 						</p>
 						<div>
 							<span className=" bg-purple-500 text-white px-3 py-1">High</span>
 						</div>
 						<div className=" mt-2 flex gap-5 justify-center ">
 							<button className=" hover:text-indigo-500 transition-all duration-300">
-								<i className="fi fi-rr-pencil"></i>
+								<i className="fi fi-rr-pencil text-xl"></i>
 							</button>
 							<button className=" hover:text-red-500 transition-all duration-300">
-								<i className="fi fi-rr-trash"></i>
+								<i className="fi fi-rr-trash text-xl"></i>
 							</button>
 						</div>
 					</div>

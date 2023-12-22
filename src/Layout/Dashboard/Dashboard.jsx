@@ -37,7 +37,11 @@ const Dashboard = () => {
 						</Link>
 
 						<ul className="relative">
-							<li className="bg-slate-200 hover:bg-opacity-90 hover:cursor-pointer py-2 text-white text-lg rounded-lg flex items-center justify-left gap-2 pl-5 transition-all duration-300">
+							<li
+								className={`bg-slate-200 hover:bg-opacity-90 hover:cursor-pointer py-2 text-white text-lg rounded-lg flex items-center ${
+									open ? 'justify-left ' : 'justify-center pr-5'
+								}  gap-2 pl-5 transition-all duration-300`}
+							>
 								<div className="pt-1">
 									<i className="fi fi-rr-note text-lg text-indigo-500"></i>
 								</div>
