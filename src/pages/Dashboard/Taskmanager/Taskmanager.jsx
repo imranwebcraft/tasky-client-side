@@ -143,7 +143,7 @@ const Taskmanager = () => {
 							<p className=" group-hover:text-white transition-all duration-300">
 								Log Out
 							</p>
-							<i className="fi fi-rr-power rotate-90 group-hover:text-white text-red-500 font-semibold text-2xl transition-all duration-300"></i>
+							<i className="fi fi-rr-power rotate-90 group-hover:text-white text-red-500 font-semibold text-xl transition-all duration-300"></i>
 						</button>
 					</div>
 				</div>
@@ -235,26 +235,29 @@ const Taskmanager = () => {
 
 			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
 				{/* -------- Tdod -------- */}
-
-				<div className=" min-h-[500px] p-10 bg-[#EEF2F5] rounded-lg">
+				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
+					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
 						<MdOutlineTaskAlt />
 						<span>Todo</span>
+						<span className=" text-base text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
+							{ftodos?.length}
+						</span>
 					</h3>
-
+					{/* -------- Task ------- */}
 					{ftodos?.map((todo) => (
 						<div
 							key={todo._id}
 							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
 						>
-							<div className=" flex justify-between">
+							<div className=" md:flex justify-between">
 								<p className=" text-2xl font-medium">{todo.task_name}</p>
 								<span className=" bg-purple-500 text-white px-3 py-1">
 									High
 								</span>
 							</div>
 							<p className=" text-gray-700">{todo.task_description}</p>
-							<div className=" flex items-center gap-5">
+							<div className=" md:flex nd:items-center gap-5">
 								<p className=" font-medium flex items-center gap-1">
 									<LuCalendar />
 									{formatDate(new Date(todo.deadline))}
@@ -276,24 +279,29 @@ const Taskmanager = () => {
 					))}
 				</div>
 				{/*-------- Ongoing ---------- */}
-				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg ">
+				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg ">
+					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-cyan-500 py-2 text-white rounded">
 						<AiOutlineLoading3Quarters />
 						<span>On Going</span>
+						<span className=" text-base text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
+							{fongoing?.length}
+						</span>
 					</h3>
+					{/* -------- Task ------- */}
 					{fongoing?.map((todo) => (
 						<div
 							key={todo._id}
 							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
 						>
-							<div className=" flex justify-between">
+							<div className=" md:flex justify-between">
 								<p className=" text-2xl font-medium">{todo.task_name}</p>
 								<span className=" bg-purple-500 text-white px-3 py-1">
 									High
 								</span>
 							</div>
 							<p className=" text-gray-700">{todo.task_description}</p>
-							<div className=" flex items-center gap-5">
+							<div className=" md:flex nd:items-center gap-5">
 								<p className=" font-medium flex items-center gap-1">
 									<LuCalendar />
 									{formatDate(new Date(todo.deadline))}
@@ -315,24 +323,29 @@ const Taskmanager = () => {
 					))}
 				</div>
 				{/* --------- Complete ---------- */}
-				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg">
+				<div className="p-5 md:p-5 bg-[#EEF2F5] rounded-lg">
+					{/* -------- Header ------- */}
 					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-green-500 py-2 text-white rounded">
 						<IoMdDoneAll />
 						<span>Completed</span>
+						<span className=" text-base text-black flex justify-center items-center bg-white rounded-full w-5 h-5">
+							{fcompleted?.length}
+						</span>
 					</h3>
+					{/* -------- Task ------- */}
 					{fcompleted?.map((todo) => (
 						<div
 							key={todo._id}
 							className=" p-5 bg-white rounded-xl mt-5 space-y-2"
 						>
-							<div className=" flex justify-between">
+							<div className=" md:flex justify-between">
 								<p className=" text-2xl font-medium">{todo.task_name}</p>
 								<span className=" bg-purple-500 text-white px-3 py-1">
 									High
 								</span>
 							</div>
 							<p className=" text-gray-700">{todo.task_description}</p>
-							<div className=" flex items-center gap-5">
+							<div className=" md:flex nd:items-center gap-5">
 								<p className=" font-medium flex items-center gap-1">
 									<LuCalendar />
 									{formatDate(new Date(todo.deadline))}
