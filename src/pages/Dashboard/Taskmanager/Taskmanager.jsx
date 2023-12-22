@@ -1,16 +1,23 @@
-import { MdOutlineTaskAlt } from 'react-icons/md';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { MdErrorOutline, MdOutlineTaskAlt } from 'react-icons/md';
+import { AiOutlineLoading, AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { IoMdDoneAll } from 'react-icons/io';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
+import { useForm } from 'react-hook-form';
+import useAxiosPublic from '../../../hook/useAxiosPublic';
 
 const Taskmanager = () => {
-	const { logOut } = useContext(AuthContext);
+	const [loading, setLoading] = useState(false);
+	const { logOut, user } = useContext(AuthContext);
+	const axiosPublic = useAxiosPublic();
+
 	const navigate = useNavigate();
+	const userEmail = user.email;
 
 	const handleLogOut = () => {
+		setLoading(true);
 		logOut()
 			.then(() => {
 				toast.success('Log out successfull');
@@ -19,6 +26,36 @@ const Taskmanager = () => {
 			.catch((err) => {
 				toast.error(err.message);
 			});
+	};
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		reset,
+	} = useForm();
+
+	const onSubmit = async (data) => {
+		setLoading(true);
+		const todosData = {
+			userEmail,
+			task_name: data.task_name,
+			task_description: data.task_description,
+			deadline: data.deadline,
+			priority: data.priority,
+		};
+		console.log(todosData);
+		try {
+			const res = await axiosPublic.post('/todos', todosData);
+			if (res.data) {
+				toast.success('Task created successfully');
+				reset();
+				setLoading(false);
+			}
+		} catch (error) {
+			console.log(error);
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -61,8 +98,8 @@ const Taskmanager = () => {
 						<div className="relative flex-shrink-0">
 							<span className="absolute bottom-0 right-0 w-4 h-4 dark:bg-green-600 border rounded-full dark:text-gray-100 dark:border-gray-900"></span>
 							<img
-								src="https://source.unsplash.com/50x50/?portrait"
-								alt=""
+								src={user.photoURL}
+								alt="userImage"
 								className="w-10 h-10 border rounded-full dark:bg-gray-500 dark:border-gray-700"
 							/>
 						</div>
@@ -81,47 +118,83 @@ const Taskmanager = () => {
 			</div>
 
 			{/* Task Add Form */}
-			<form className="w-[80%] max-w-[400px] mx-auto">
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				className="w-[80%] max-w-[400px] mx-auto"
+			>
 				{/* Form Heading */}
 				<div className="mb-5 text-center">
-					<h1 className=" text-2xl capitalize font-semibold">Add Task</h1>
+					<h1 className=" text-3xl capitalize font-bold">Add Task</h1>
 					<p className=" text-gray-600">Hey, What&apos;s your plan today?</p>
 				</div>
 				<div className="my-2">
 					<input
+						{...register('task_name', { required: true })}
 						type="text"
 						className="w-full border rounded border-gray-500 py-2 focus:bg-slate-100 focus:border-indigo-500  placeholder:text-gray-600"
 						placeholder="Task Name"
 					/>
+					{errors.task_name?.type === 'required' && (
+						<span className=" text-red-600 text-sm flex items-center gap-[2px]">
+							<MdErrorOutline />
+							Task Name is required
+						</span>
+					)}
 				</div>
 				<div className="my-2">
 					<textarea
+						{...register('task_description', { required: true })}
 						type="text"
 						className="w-full border rounded border-gray-500 py-2 focus:bg-slate-100 focus:border-indigo-500  placeholder:text-gray-600"
 						placeholder="Task Description....."
 					/>
+					{errors.task_description?.type === 'required' && (
+						<span className=" text-red-600 text-sm flex items-center gap-[2px]">
+							<MdErrorOutline />
+							Task Description is required
+						</span>
+					)}
 				</div>
 				<div className="my-2">
 					<input
+						{...register('deadline', { required: true })}
 						type="date"
 						className="w-full border rounded border-gray-500 py-2 focus:bg-slate-100 focus:border-indigo-500  placeholder:text-gray-600"
 						placeholder="Task Name"
 					/>
+					{errors.deadline?.type === 'required' && (
+						<span className=" text-red-600 text-sm flex items-center gap-[2px]">
+							<MdErrorOutline />
+							Deadline is required
+						</span>
+					)}
 				</div>
 				<div className="my-2">
-					<select className="w-full border rounded border-gray-500 py-2 focus:bg-slate-100 focus:border-indigo-500  placeholder:text-gray-600">
+					<select
+						{...register('priority', { required: true })}
+						className="w-full border rounded border-gray-500 py-2 focus:bg-slate-100 focus:border-indigo-500  placeholder:text-gray-600"
+					>
 						<option value="" disabled>
 							Select Priority
 						</option>
-						<option value="Hign">Hign</option>
+						<option value="High">High</option>
 						<option value="Medium">Medium</option>
 						<option value="Low">Low</option>
 					</select>
+					{errors.priority?.type === 'required' && (
+						<span className=" text-red-600 text-sm flex items-center gap-[2px]">
+							<MdErrorOutline />
+							Priority is required
+						</span>
+					)}
 				</div>
 
 				{/* Add Task Button */}
-				<div className="text-center mt-5">
-					<button className="px-5 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-lg rounded transition-all duration-300">
+				<div className="flex justify-center mt-5">
+					<button className="px-5 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-lg rounded transition-all duration-300 flex gap-1 items-center">
+						{loading ? (
+							<AiOutlineLoading className="animate-spin text-white" />
+						) : undefined}
 						Add Task
 					</button>
 				</div>
@@ -132,7 +205,7 @@ const Taskmanager = () => {
 			<div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 pr-10 mb-10">
 				{/* Tdod */}
 				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg">
-					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center">
+					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-indigo-500 py-2 text-white rounded">
 						<MdOutlineTaskAlt />
 						<span>Todo</span>
 					</h3>
@@ -159,8 +232,8 @@ const Taskmanager = () => {
 					</div>
 				</div>
 				{/* Ongoing */}
-				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg">
-					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center">
+				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg ">
+					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-cyan-500 py-2 text-white rounded">
 						<AiOutlineLoading3Quarters />
 						<span>On Going</span>
 					</h3>
@@ -188,7 +261,7 @@ const Taskmanager = () => {
 				</div>
 				{/* Complete */}
 				<div className=" min-h-[800px] p-10 bg-[#EEF2F5] rounded-lg">
-					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center">
+					<h3 className=" text-center text-xl font-semibold flex gap-2 items-center justify-center bg-green-500 py-2 text-white rounded">
 						<IoMdDoneAll />
 						<span>Completed</span>
 					</h3>
